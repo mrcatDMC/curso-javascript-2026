@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Saludo</title>
+</head>
+<body>
+    <h2>Programa de saludo</h2>
+
+    Nombre: <input type="text" id="nombre"><br><br>
+    Edad: <input type="number" id="edad"><br><br>
+
+    <button onclick="saludar()">Saludar</button>
+
+    <h3 id="resultado"></h3>
+    <script>
+        function saludar() {
+            var nombre = document.getElementById("nombre").value;
+            var edad = document.getElementById("edad").value;
+
+            var mensaje = "Hola " + nombre + ", tienes " + edad + " años. ¡Bienvenido!";
+
+            document.getElementById("resultado").innerHTML = mensaje;
+        }
+    </script>
+</body>
+</html>
