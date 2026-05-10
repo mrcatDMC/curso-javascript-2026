@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 10 Proyectos </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --success: #00b894;
+            --danger: #d63031;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --glass: rgba(255, 255, 255, 0.95);
+            --shadow: 0 8px 32px rgba(0,0,0,0.1);
+            --radius: 20px;
+            
+            /* Variables para el modo oscuro */
+            --bg-body: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-proyecto: rgba(255, 255, 255, 0.95);
+            --text-color: #2d3436;
+            --input-bg: white;
+            --input-border: #e0e0e0;
+            --tarea-bg: white;
+            --tarea-border: #e0e0e0;
+            --toggle-bg: linear-gradient(135deg, #f5f6fa, #dfe6e9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: slideDown 0.8s ease;
+        }
+
+        header p {
+            color: #636e72;
+            font-size: 1.1rem;
+            font-weight: 300;
+            transition: color 0.5s ease;
+        }
+
+        nav {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: all 0.5s ease;
+        }
+
+        .menu-desktop {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-desktop button {
+            padding: 0.7rem 1.3rem;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+        }
+
+        .menu-desktop button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108,92,231,0.3);
+            border-color: white;
+        }
+
+        .menu-mobile {
+            display: none;
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            text-align: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%236c5ce7'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            transition: all 0.5s ease;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .proyecto {
+            display: none;
+            background: var(--bg-proyecto);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            transition: all 0.5s ease;
+            color: var(--text-color);
+        }
+
+        .proyecto.active {
+            display: block;
+        }
+
+        .proyecto::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .proyecto h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: color 0.5s ease;
+        }
+
+        .proyecto-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 15px;
+            padding: 0.5rem;
+            color: white;
+        }
+
+        /* Botones generales */
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #e17055);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #55efc4);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Inputs */
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--input-border);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--input-bg);
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108,92,231,0.1);
+        }
+
+        /* PROYECTO 1: Contador */
+        .contador-display {
+            text-align: center;
+        }
+        .contador-numero {
+            font-size: 7rem;
+            font-weight: 700;
+            display: block;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .contador-botones {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* PROYECTO 2: Tareas */
+        .todo-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .todo-input input {
+            flex: 1;
+        }
+        .tarea-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: var(--tarea-bg);
+            margin-bottom: 0.8rem;
+            border-radius: 15px;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--tarea-border);
+            animation: slideIn 0.3s ease;
+        }
+        .tarea-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transform: translateX(5px);
+        }
+        .tarea-item.completada span {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        .tarea-item button {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: auto;
+            transition: all 0.3s ease;
+        }
+
+        /* PROYECTO 4: Calculadora */
+        .calculadora {
+            max-width: 320px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            padding: 1.5rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .calc-display {
+            width: 100%;
+            padding: 1.5rem;
+            font-size: 2.5rem;
+            text-align: right;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: rgb(0, 0, 0);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        .calc-botones {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.7rem;
+        }
+        .calc-botones button {
+            padding: 1.2rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .calc-botones button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+        .calc-botones .op {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* PROYECTO 5: CAMBIADOR DE COLORES */
+        .color-box {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: background 0.5s ease;
+            border: 2px solid #e0e0e0;
+        }
+        .color-box h3 {
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        /* PROYECTO 8: Modo Oscuro */
+        .toggle-container {
+            text-align: center;
+            padding: 2rem;
+            background: var(--toggle-bg);
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+            margin: 1.5rem 0;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+        input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+
+        /* PROYECTO 10: Galería */
+        .filtros {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .filtros button {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filtros button.active,
+        .filtros button:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .grid-galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .grid-galeria img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .grid-galeria img:hover {
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 40px;
+            color: white;
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            transition: all 0.5s ease;
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ============ contraste blanco/negro ejercicio 8 ============ */
+        body.modo-oscuro {
+            --bg-body: linear-gradient(135deg, #1a1a2e, #16213e);
+            --bg-proyecto: rgba(30, 30, 50, 0.95);
+            --text-color: #f0f0f0;
+            --input-bg: #2d2d44;
+            --input-border: #4a4a6a;
+            --tarea-bg: #2d2d44;
+            --tarea-border: #4a4a6a;
+            --toggle-bg: linear-gradient(135deg, #2d3436, #636e72);
+        }
+
+        body.modo-oscuro header {
+            background: rgba(30, 30, 50, 0.95);
+        }
+
+        body.modo-oscuro header p {
+            color: #b2bec3;
+        }
+
+        body.modo-oscuro nav {
+            background: rgba(30, 30, 50, 0.95);
+        }
+
+        body.modo-oscuro .menu-mobile {
+            background: #2d2d44;
+            color: #f0f0f0;
+            border-color: #4a4a6a;
+        }
+
+        body.modo-oscuro input[type="text"],
+        body.modo-oscuro input[type="number"] {
+            color: #f0f0f0;
+        }
+
+        body.modo-oscuro footer {
+            background: #0a0a1a;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .menu-desktop { display: none; }
+            .menu-mobile { display: block; }
+            header h1 { font-size: 1.8rem; }
+            .proyecto { padding: 1.5rem; }
+            .proyecto h2 { font-size: 1.5rem; }
+            .contador-numero { font-size: 5rem; }
+            .contador-botones { flex-direction: column; }
+            .contador-botones button { width: 100%; }
+            .todo-input { flex-direction: column; }
+            .grid-galeria { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+            .grid-galeria img { height: 150px; }
+            .calculadora { max-width: 100%; }
+            .filtros { gap: 0.5rem; }
+            .filtros button { font-size: 0.85rem; padding: 0.5rem 1rem; }
+            .color-box { padding: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.5rem; }
+            header p { font-size: 0.9rem; }
+            .proyecto { padding: 1rem; }
+            .contador-numero { font-size: 4rem; }
+            .calc-display { font-size: 2rem; padding: 1rem; }
+            .calc-botones button { padding: 0.8rem; font-size: 1rem; }
+            .grid-galeria { grid-template-columns: repeat(2, 1fr); }
+            .grid-galeria img { height: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-icon"></div>
+    <h1>Mis 10 Proyectos</h1>
+    <p>Angel Peña</p>
+</header>
+
+<nav>
+    <select class="menu-mobile" onchange="mostrarProyecto(this.value)">
+        <option value="proyecto1"> 1. Contador Inteligente</option>
+        <option value="proyecto2"> 2. Lista de Tareas</option>
+        <option value="proyecto3"> 3. Adivina el Número</option>
+        <option value="proyecto4"> 4. Calculadora Básica</option>
+        <option value="proyecto5"> 5. Cambiador de Colores</option>
+        <option value="proyecto6"> 6. Temporizador</option>
+        <option value="proyecto7"> 7. Generador de Contraseñas</option>
+        <option value="proyecto8"> 8. Modo Oscuro / Claro</option>
+        <option value="proyecto9"> 9. Piedra, Papel o Tijera</option>
+        <option value="proyecto10"> 10. Galería de Imágenes</option>
+    </select>
+
+    <div class="menu-desktop">
+        <button onclick="mostrarProyecto('proyecto1')">1 Contador Inteligente</button>
+        <button onclick="mostrarProyecto('proyecto2')">2 Lista de Tareas</button>
+        <button onclick="mostrarProyecto('proyecto3')">3 Adivina el Número</button>
+        <button onclick="mostrarProyecto('proyecto4')">4 Calculadora Básica</button>
+        <button onclick="mostrarProyecto('proyecto5')">5 Cambiador de Colores</button>
+        <button onclick="mostrarProyecto('proyecto6')">6 Temporizador</button>
+        <button onclick="mostrarProyecto('proyecto7')">7 Generador de Contraseñas</button>
+        <button onclick="mostrarProyecto('proyecto8')">8 Modo Oscuro / Claro</button>
+        <button onclick="mostrarProyecto('proyecto9')">9 piedra, papel o tijera</button>
+        <button onclick="mostrarProyecto('proyecto10')">10 Galería de Imágenes</button>
+    </div>
+</nav>
+
+<main>
+    <!-- PROYECTO 1: Contador Inteligente -->
+    <section id="proyecto1" class="proyecto active">
+        <h2><span class="proyecto-icon"></span> Contador Inteligente</h2>
+        <div class="contador-display">
+            <span id="numContador" class="contador-numero">0</span>
+            <div class="contador-botones">
+                <button class="btn btn-success" onclick="contador(1)">+1</button>
+                <button class="btn btn-outline" onclick="contador(0)">Reiniciar</button>
+                <button class="btn btn-danger" onclick="contador(-1)">-1</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTO 2: Lista de Tareas -->
+    <section id="proyecto2" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Lista de Tareas</h2>
+        <div class="todo-input">
+            <input type="text" id="inputTarea" placeholder=" Escribe una tarea...">
+            <button class="btn btn-primary" onclick="agregarTarea()">Agregar</button>
+        </div>
+        <div id="listaTareas"></div>
+    </section>
+
+    <!-- PROYECTO 3: Adivina el Número -->
+    <section id="proyecto3" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Adivina el Número</h2>
+        <div style="text-align:center">
+            <p style="font-size:1.2rem; margin-bottom:1rem">Número secreto entre 1 y 100</p>
+            <input type="number" id="intento" min="1" max="100" placeholder="Tu número" style="width:200px">
+            <button class="btn btn-primary" onclick="adivinar()" style="margin-left:0.5rem"> Adivinar</button>
+            <p id="msgAdivina" style="margin:1.5rem 0; font-size:1.2rem; font-weight:600"></p>
+            <p> Intentos: <strong id="contIntentos">0</strong></p>
+            <button class="btn btn-outline" onclick="nuevoJuego()">Nuevo Juego</button>
+        </div>
+    </section>
+
+    <!-- PROYECTO 4: Calculadora -->
+    <section id="proyecto4" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Calculadora Básica</h2>
+        <div class="calculadora">
+            <input type="text" id="pantallaCalc" class="calc-display" readonly value="0">
+            <div class="calc-botones">
+                <button onclick="calc('7')">7</button><button onclick="calc('8')">8</button><button onclick="calc('9')">9</button><button class="op" onclick="calc('+')">+</button>
+                <button onclick="calc('4')">4</button><button onclick="calc('5')">5</button><button onclick="calc('6')">6</button><button class="op" onclick="calc('-')">−</button>
+                <button onclick="calc('1')">1</button><button onclick="calc('2')">2</button><button onclick="calc('3')">3</button><button class="op" onclick="calc('*')">×</button>
+                <button onclick="calc('0')">0</button><button onclick="calc('.')">.</button><button onclick="calc('=')" style="background:#b40934">=</button><button class="op" onclick="calc('/')">÷</button>
+                <button onclick="calc('C')" style="background:#d63031; grid-column: span 2">C</button>
+                <button onclick="calc('borrar')" style="grid-column: span 2">⌫</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTO 5: Cambiador de Colores-->
+    <section id="proyecto5" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Cambiador de Colores Aleatorios</h2>
+        <div id="colorBox" class="color-box">
+            <h3>Caja de Color</h3>
+            <button class="btn" onclick="cambiarColorCaja()" style="font-size:1.2rem; padding:1.2rem 2.5rem; background:linear-gradient(135deg,#667eea,#764ba2); color:white;">
+                 Cambiar Color de esta Caja
+            </button>
+            <p style="margin:1.5rem 0; font-size:1.3rem; font-weight:600">Color: <span id="codColor">#ffffff</span></p>
+            <button class="btn btn-outline" onclick="copiarColor()">Copiar Código</button>
+        </div>
+    </section>
+
+    <!-- PROYECTO 6: Temporizador -->
+    <section id="proyecto6" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Temporizador</h2>
+        <div style="text-align:center">
+            <div style="display:flex; gap:1rem; justify-content:center; margin-bottom:1.5rem">
+                <input type="number" id="minTemp" placeholder="Min" style="width:100px; text-align:center">
+                <span style="font-size:2.5rem; font-weight:bold">:</span>
+                <input type="number" id="segTemp" placeholder="Seg" style="width:100px; text-align:center">
+            </div>
+            <div id="displayTemp" style="font-size:5rem; font-weight:700; margin:1rem 0; background:linear-gradient(135deg,#667eea,#764ba2); -webkit-background-clip:text; -webkit-text-fill-color:transparent">00:00</div>
+            <div class="contador-botones">
+                <button class="btn btn-success" onclick="iniciarTemp()"> Iniciar</button>
+                <button class="btn btn-outline" onclick="pausarTemp()"> Pausar</button>
+                <button class="btn btn-danger" onclick="reiniciarTemp()"> Reiniciar</button>
+            </div>
+            <p id="msgTemp" style="font-size:1.8rem; font-weight:700; margin-top:1rem"></p>
+        </div>
+    </section>
+
+    <!-- PROYECTO 7: Generador de Contraseñas -->
+    <section id="proyecto7" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Generador de Contraseñas</h2>
+        <div style="text-align:center; max-width:450px; margin:0 auto">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-bottom:1.5rem">
+                <label style="font-weight:500"><input type="checkbox" id="mayus" checked>Mayúsculas</label>
+                <label style="font-weight:500"><input type="checkbox" id="minus" checked>Minúsculas</label>
+                <label style="font-weight:500"><input type="checkbox" id="num" checked>Números</label>
+                <label style="font-weight:500"><input type="checkbox" id="simb">Símbolos</label>
+            </div>
+            <label style="font-weight:500"> Longitud: <input type="range" id="longPass" min="6" max="20" value="12" oninput="document.getElementById('valLong').textContent=this.value"> <strong id="valLong">12</strong></label>
+            <br>
+            <button class="btn btn-primary" onclick="generarPass()" style="margin:1.5rem 0"> Generar Contraseña</button>
+            <div id="passGenerada" style="background:#f0f0f0; padding:1.2rem; border-radius:15px; font-size:1.3rem; word-break:break-all; min-height:55px; font-weight:600; letter-spacing:2px"></div>
+            <button class="btn btn-outline" onclick="copiarPass()" style="margin-top:0.8rem"> Copiar</button>
+        </div>
+    </section>
+
+    <!-- PROYECTO 8: Modo Oscuro / Claro -->
+    <section id="proyecto8" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Modo Oscuro / Claro</h2>
+        <div class="toggle-container">
+            <h3 style="font-size:1.5rem; margin-bottom:1rem">Cambiar modo de TODA la página</h3>
+            <label class="switch">
+                <input type="checkbox" id="toggleModo" onchange="toggleOscuro()">
+                <span class="slider"></span>
+            </label>
+            <p id="estadoModo" style="font-size:1.3rem; font-weight:600; margin-top:1rem">Modo Claro</p>
+        </div>
+    </section>
+
+    <!-- PROYECTO 9: Piedra, Papel o Tijera -->
+    <section id="proyecto9" class="proyecto">
+        <h2><span class="proyecto-icon"></span>Piedra, Papel o Tijera</h2>
+        <div style="text-align:center">
+            <div class="contador-botones" style="margin-bottom:2rem">
+                <button class="btn btn-outline" onclick="jugar('piedra')" style="font-size:2rem; padding:1.5rem">piedra</button>
+                <button class="btn btn-outline" onclick="jugar('papel')" style="font-size:2rem; padding:1.5rem">papel</button>
+                <button class="btn btn-outline" onclick="jugar('tijera')" style="font-size:2rem; padding:1.5rem">tijera</button>
+            </div>
+            <p id="resJuego" style="font-size:1.2rem; margin:1rem 0; font-weight:600"></p>
+            <div style="display:flex; justify-content:center; gap:3rem; font-size:1.2rem; margin:1rem 0">
+                <p>Tú: <strong id="ptsUsuario">0</strong></p>
+                <p>PC: <strong id="ptsCompu">0</strong></p>
+            </div>
+            <button class="btn btn-outline" onclick="reiniciarJuego()"> Reiniciar Marcador</button>
+        </div>
+    </section>
+
+    <!-- PROYECTO 10: Galería -->
+    <section id="proyecto10" class="proyecto">
+        <h2><span class="proyecto-icon"></span> Galería de Imágenes</h2>
+        <div class="filtros">
+            <button class="active" onclick="filtrar('todas', this)">📸 Todas</button>
+            <button onclick="filtrar('animales', this)"> Animales</button>
+            <button onclick="filtrar('tecnologia', this)"> Tecnología</button>
+            <button onclick="filtrar('naturaleza', this)"> Naturaleza</button>
+        </div>
+        <input type="text" id="buscadorImg" placeholder=" Buscar imágenes..." style="width:100%; margin-bottom:1rem">
+        <div class="grid-galeria" id="gridGaleria"></div>
+    </section>
+</main>
+
+<div id="modal" class="modal" onclick="this.style.display='none'">
+    <span class="modal-close">&times;</span>
+    <img id="imgModal" src="">
+</div>
+
+<footer>
+    <p> Angel Peña - 2026 | <a href="https://github.com/mrcatDMC" target="_blank">GitHub</a></p>
+</footer>
+
+<script>
+// ===== NAVEGACIÓN =====
+function mostrarProyecto(id) {
+    document.querySelectorAll('.proyecto').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector('.menu-mobile').value = id;
+}
+
+// ===== PROYECTO 1: CONTADOR =====
+let cont = parseInt(localStorage.getItem('contador')) || 0;
+actualizarContador();
+function actualizarContador() {
+    let n = document.getElementById('numContador');
+    n.textContent = cont;
+    n.style.color = cont > 0 ? '#00b894' : cont < 0 ? '#d63031' : '#b2bec3';
+    localStorage.setItem('contador', cont);
+}
+function contador(v) { 
+    v === 0 ? cont = 0 : cont += v;
+    actualizarContador();
+}
+
+// ===== PROYECTO 2: TAREAS =====
+let tareas = JSON.parse(localStorage.getItem('tareas')) || [];
+mostrarTareas();
+function agregarTarea() {
+    let input = document.getElementById('inputTarea');
+    let texto = input.value.trim();
+    if (texto) {
+        tareas.push({ id: Date.now(), texto, completada: false });
+        localStorage.setItem('tareas', JSON.stringify(tareas));
+        input.value = '';
+        mostrarTareas();
+    }
+}
+function mostrarTareas() {
+    let lista = document.getElementById('listaTareas');
+    lista.innerHTML = '';
+    tareas.forEach(t => {
+        let div = document.createElement('div');
+        div.className = 'tarea-item' + (t.completada ? ' completada' : '');
+        div.innerHTML = `
+            <input type="checkbox" ${t.completada ? 'checked' : ''} onchange="toggleTarea(${t.id})">
+            <span>${t.texto}</span>
+            <button onclick="eliminarTarea(${t.id})">×</button>
+        `;
+        lista.appendChild(div);
+    });
+}
+function toggleTarea(id) {
+    let t = tareas.find(x => x.id === id);
+    if (t) { t.completada = !t.completada; localStorage.setItem('tareas', JSON.stringify(tareas)); mostrarTareas(); }
+}
+function eliminarTarea(id) {
+    tareas = tareas.filter(x => x.id !== id);
+    localStorage.setItem('tareas', JSON.stringify(tareas));
+    mostrarTareas();
+}
+document.getElementById('inputTarea')?.addEventListener('keypress', e => { if (e.key === 'Enter') agregarTarea(); });
+
+// ===== PROYECTO 3: ADIVINA =====
+let secreto, intentos;
+nuevoJuego();
+function nuevoJuego() {
+    secreto = Math.floor(Math.random() * 100) + 1;
+    intentos = 0;
+    document.getElementById('msgAdivina').textContent = '';
+    document.getElementById('contIntentos').textContent = '0';
+    document.getElementById('intento').value = '';
+}
+function adivinar() {
+    let n = parseInt(document.getElementById('intento').value);
+    let msg = document.getElementById('msgAdivina');
+    if (isNaN(n) || n < 1 || n > 100) { msg.textContent = ' Número entre 1 y 100'; msg.style.color = '#d63031'; return; }
+    intentos++;
+    document.getElementById('contIntentos').textContent = intentos;
+    if (n === secreto) { msg.textContent = ' ¡Correcto! ¡Ganaste!'; msg.style.color = '#00b894'; }
+    else { msg.textContent = n < secreto ? ' Muy bajo' : ' Muy alto'; msg.style.color = '#fdcb6e'; }
+}
+
+// ===== PROYECTO 4: CALCULADORA =====
+let calcReset = false;
+function calc(v) {
+    let p = document.getElementById('pantallaCalc');
+    if (calcReset && '0123456789'.includes(v)) {
+        p.value = '';
+        calcReset = false;
+    }
+    if (v === 'C') { p.value = '0'; calcReset = true; }
+    else if (v === 'borrar') p.value = p.value.slice(0, -1) || '0';
+    else if (v === '=') {
+        try {
+            let exp = p.value.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+            if (exp.includes('/0') && !exp.includes('/0.')) { p.value = 'Error'; return; }
+            let r = eval(exp);
+            p.value = (r === Infinity || isNaN(r)) ? 'Error' : parseFloat(r.toFixed(10));
+            calcReset = true;
+        } catch { p.value = 'Error'; }
+    } else {
+        if (calcReset && '+-*/'.includes(v)) calcReset = false;
+        if (p.value === '0' || p.value === 'Error') p.value = '';
+        p.value += v;
+    }
+}
+
+// ===== PROYECTO 5: CAMBIAR COLOR =====
+function cambiarColorCaja() {
+    let colorAleatorio = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+    let caja = document.getElementById('colorBox');
+    caja.style.background = colorAleatorio;
+    document.getElementById('codColor').textContent = colorAleatorio;
+    
+    // Ajustar color del texto para que sea legible
+    let r = parseInt(colorAleatorio.slice(1,3), 16);
+    let g = parseInt(colorAleatorio.slice(3,5), 16);
+    let b = parseInt(colorAleatorio.slice(5,7), 16);
+    let brillo = (r * 299 + g * 587 + b * 114) / 1000;
+    let colorTexto = brillo > 128 ? '#2d3436' : '#ffffff';
+    caja.querySelector('h3').style.color = colorTexto;
+    document.getElementById('codColor').style.color = colorTexto;
+}
+
+function copiarColor() {
+    navigator.clipboard.writeText(document.getElementById('codColor').textContent);
+    alert('¡Color copiado!');
+}
+
+// ===== PROYECTO 6: TEMPORIZADOR =====
+let intervalo, tiempoRestante = 0;
+function iniciarTemp() {
+    clearInterval(intervalo);
+    let m = parseInt(document.getElementById('minTemp').value) || 0;
+    let s = parseInt(document.getElementById('segTemp').value) || 0;
+    tiempoRestante = m * 60 + s;
+    if (tiempoRestante <= 0) { alert('Pon un tiempo válido'); return; }
+    document.getElementById('msgTemp').textContent = '';
+    actualizarDisplayTemp();
+    intervalo = setInterval(() => {
+        if (tiempoRestante <= 0) {
+            clearInterval(intervalo);
+            document.getElementById('displayTemp').textContent = '00:00';
+            document.getElementById('msgTemp').textContent = '¡Tiempo terminado!';
+            document.getElementById('msgTemp').style.color = '#d63031';
+            return;
+        }
+        tiempoRestante--;
+        actualizarDisplayTemp();
+    }, 1000);
+}
+function actualizarDisplayTemp() {
+    let min = Math.floor(tiempoRestante / 60);
+    let seg = tiempoRestante % 60;
+    document.getElementById('displayTemp').textContent = `${String(min).padStart(2,'0')}:${String(seg).padStart(2,'0')}`;
+}
+function pausarTemp() { clearInterval(intervalo); }
+function reiniciarTemp() {
+    clearInterval(intervalo);
+    document.getElementById('displayTemp').textContent = '00:00';
+    document.getElementById('minTemp').value = '';
+    document.getElementById('segTemp').value = '';
+    document.getElementById('msgTemp').textContent = '';
+}
+
+// ===== PROYECTO 7: CONTRASEÑAS =====
+function generarPass() {
+    let long = parseInt(document.getElementById('longPass').value);
+    let chars = '';
+    if (document.getElementById('mayus').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (document.getElementById('minus').checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+    if (document.getElementById('num').checked) chars += '0123456789';
+    if (document.getElementById('simb').checked) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    if (!chars) { alert('Selecciona al menos una opción'); return; }
+    let pass = '';
+    for (let i = 0; i < long; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+    document.getElementById('passGenerada').textContent = pass;
+}
+function copiarPass() {
+    let p = document.getElementById('passGenerada').textContent;
+    if (p) { navigator.clipboard.writeText(p); alert('¡Contraseña copiada!'); }
+}
+
+// ===== PROYECTO 8: MODO OSCURO =====
+let oscuro = localStorage.getItem('modoOscuro') === 'true';
+if (oscuro) { 
+    document.body.classList.add('modo-oscuro'); 
+    document.getElementById('toggleModo').checked = true; 
+    document.getElementById('estadoModo').textContent = 'Modo Oscuro'; 
+}
+function toggleOscuro() {
+    document.body.classList.toggle('modo-oscuro');
+    let estado = document.body.classList.contains('modo-oscuro');
+    document.getElementById('estadoModo').textContent = estado ? 'Modo Oscuro' : 'Modo Claro';
+    localStorage.setItem('modoOscuro', estado);
+}
+
+// ===== PROYECTO 9: PIEDRA PAPEL TIJERA =====
+let ptsU = 0, ptsC = 0;
+function jugar(user) {
+    let opciones = ['piedra', 'papel', 'tijera'];
+    let compu = opciones[Math.floor(Math.random() * 3)];
+    let emojis = { piedra: 'piedra', papel: 'papel', tijera: 'tijera' };
+    let res = '';
+    if (user === compu) res = '¡Empate!';
+    else if ((user === 'piedra' && compu === 'tijera') || (user === 'papel' && compu === 'piedra') || (user === 'tijera' && compu === 'papel')) {
+        res = '¡Ganaste!'; ptsU++;
+    } else { res = 'Perdiste'; ptsC++; }
+    document.getElementById('resJuego').innerHTML = `Tú: ${emojis[user]} | PC: ${emojis[compu]}<br><strong>${res}</strong>`;
+    document.getElementById('ptsUsuario').textContent = ptsU;
+    document.getElementById('ptsCompu').textContent = ptsC;
+}
+function reiniciarJuego() { ptsU = 0; ptsC = 0; document.getElementById('ptsUsuario').textContent = '0'; document.getElementById('ptsCompu').textContent = '0'; document.getElementById('resJuego').textContent = ''; }
+
+// ===== PROYECTO 10: GALERÍA =====
+const imagenes = [
+    { url: 'https://picsum.photos/id/237/400/300', cat: 'animales', desc: 'Perro' },
+    { url: 'https://picsum.photos/id/1003/400/300', cat: 'animales', desc: 'Ciervo' },
+    { url: 'https://picsum.photos/id/1025/400/300', cat: 'animales', desc: 'Gato' },
+    { url: 'https://picsum.photos/id/0/400/300', cat: 'tecnologia', desc: 'Computadora' },
+    { url: 'https://picsum.photos/id/1/400/300', cat: 'tecnologia', desc: 'Laptop' },
+    { url: 'https://picsum.photos/id/26/400/300', cat: 'tecnologia', desc: 'Cámara' },
+    { url: 'https://picsum.photos/id/10/400/300', cat: 'naturaleza', desc: 'Bosque' },
+    { url: 'https://picsum.photos/id/11/400/300', cat: 'naturaleza', desc: 'Paisaje' },
+    { url: 'https://picsum.photos/id/15/400/300', cat: 'naturaleza', desc: 'Montaña' }
+];
+function mostrarGaleria(arr = imagenes) {
+    let grid = document.getElementById('gridGaleria');
+    grid.innerHTML = arr.map(img => `<img src="${img.url}" alt="${img.desc}" onclick="abrirModal('${img.url}')" loading="lazy">`).join('');
+}
+function filtrar(cat, btn) {
+    document.querySelectorAll('.filtros button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('buscadorImg').value = '';
+    mostrarGaleria(cat === 'todas' ? imagenes : imagenes.filter(i => i.cat === cat));
+}
+document.getElementById('buscadorImg').addEventListener('input', function() {
+    let term = this.value.toLowerCase();
+    mostrarGaleria(imagenes.filter(i => i.desc.toLowerCase().includes(term) || i.cat.toLowerCase().includes(term)));
+});
+function abrirModal(url) {
+    document.getElementById('modal').style.display = 'block';
+    document.getElementById('imgModal').src = url;
+}
+mostrarGaleria();
+</script>
+
+</body>
+</html>
